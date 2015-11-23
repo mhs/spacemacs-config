@@ -10,7 +10,7 @@ namespace :spacemacs do
   dot_emacs = HOME.join('.emacs.d')
   dot_spacemacs = HOME.join('.spacemacs')
   dot_custom = HOME.join('.spacemacs.custom')
-  dot_machine = HOME.join('.spacemacs.machine-local')
+  dot_spacemacs_d = HOME.join('.spacemacs.d')
 
   spacemacs_config = CONFIG_ROOT.join('spacemacs.el')
   machine_config = CONFIG_ROOT.join('machine-local.el')
@@ -38,13 +38,8 @@ namespace :spacemacs do
     touch machine_config
   end
 
-  file dot_machine do
-    puts "Symlinking ~/.spacemacs.machine-local -> machine-local.el"
-    ln_s(machine_config, dot_machine)
-  end
-
   task :touch => [dot_custom, machine_config]
-  task :link => [:touch, master_checkout, dot_emacs, dot_spacemacs, dot_machine]
+  task :link => [:touch, master_checkout, dot_emacs, dot_spacemacs]
 
   task :check do
     if `which emacs`.empty?
